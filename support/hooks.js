@@ -5,7 +5,7 @@ const path = require("path")
 
 const headlessMode = process.env.HEADLESS === "false" ? false : true;
 
-// Global variables
+// Declare global variables
 let browser;
 let context;
 let page;
@@ -18,13 +18,13 @@ BeforeAll(async function () {
 
 // Runs **before each** test scenario
 Before(async function () {
-  console.log("Creating new context and page...");
+  console.log("\nCreating new context and page...");
   context = await browser.newContext();
   page = await context.newPage();
   this.page = page; // Store page instance in Cucumber world
 });
 
-// Runs **after each** test scenario
+// Runs **after each** test scenario.
 // **Take Screenshot on Failure**
 After(async function (scenario) {
   if (scenario.result?.status === "FAILED") {
@@ -35,9 +35,9 @@ After(async function (scenario) {
       fs.mkdirSync("screenshots");
     }
 
-    // Take screenshot and save it
+    // Take screenshot and save it to the respective directory
     await this.page.screenshot({ path: screenshotPath, fullPage: true });
-    console.log(`📸 Screenshot taken: ${screenshotPath}`);
+    console.log(`\nScreenshot taken: ${screenshotPath}`);
   }
 
   await this.page.close();
@@ -46,7 +46,7 @@ After(async function (scenario) {
 
 // Runs **after all** test scenarios
 AfterAll(async function () {
-  console.log("Closing browser...");
+  console.log("\nClosing browser...");
   await browser.close();
 });
 
